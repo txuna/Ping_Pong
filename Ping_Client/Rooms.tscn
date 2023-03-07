@@ -1,0 +1,101 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Down Hill.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Rooms.gd" type="Script" id=2]
+[ext_resource path="res://RoomDisplay.tscn" type="PackedScene" id=3]
+[ext_resource path="res://CreatRoomControl.tscn" type="PackedScene" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 64
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "room list" ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "title"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "room list", "room list.", "room list..", "room list...", "room list....", "room list" ]
+}
+
+[node name="Rooms" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 22.0
+margin_top = 22.0
+margin_right = 641.0
+margin_bottom = 122.0
+custom_fonts/font = SubResource( 1 )
+text = "room list"
+align = 1
+valign = 1
+
+[node name="CreateRoomBtn" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -327.0
+margin_top = 43.0
+margin_right = -21.0
+margin_bottom = 103.0
+custom_fonts/font = SubResource( 2 )
+text = "create room"
+icon_align = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 35.0
+margin_top = 158.0
+margin_right = -30.0
+margin_bottom = -26.0
+
+[node name="RoomDisplay" parent="VBoxContainer" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_right = 959.0
+margin_bottom = 69.0
+
+[node name="ReloadRoom" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "title"
+anims/RESET = SubResource( 3 )
+anims/title = SubResource( 4 )
+
+[node name="CreatRoomControl" parent="." instance=ExtResource( 4 )]
+visible = false
+
+[connection signal="pressed" from="CreateRoomBtn" to="." method="_on_CreateRoomBtn_pressed"]
+[connection signal="timeout" from="ReloadRoom" to="." method="_on_ReloadRoom_timeout"]

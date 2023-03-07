@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Ball.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+
+[node name="TestWorld" type="Node2D"]
+
+[node name="Ball" parent="." instance=ExtResource( 1 )]
+position = Vector2( 412, 202 )
+applied_force = Vector2( 0, 0 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PoolVector2Array( 119, 97, 110, 490, 931, 494, 924, 83, 138, 85, 138, 55, 925, 53, 971, 52, 973, 535, 57, 525, 69, 52, 138, 55, 137, 104 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 294, 215 )
